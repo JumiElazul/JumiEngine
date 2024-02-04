@@ -1,5 +1,7 @@
 #pragma once
-struct GLFWwindow;
+#include <memory>
+
+class window_handler;
 
 class AppCore
 {
@@ -9,8 +11,10 @@ public:
     void init();
 
 private:
-    GLFWwindow* _window;
+    std::unique_ptr<window_handler> _window_handler;
     bool _initialized;
+
+    void initialize_glfw();
 
     AppCore();
     ~AppCore() = default;
