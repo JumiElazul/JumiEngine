@@ -26,7 +26,7 @@ project "EngineCore"
       {
           "../vcpkg_installed/%{triplet}/debug/lib",
       }
-      links { "fmtd" }
+      links { "fmtd", "glfw3" }
 
    filter "configurations:Release"
       optimize "On"
@@ -35,4 +35,4 @@ project "EngineCore"
       {
           "../vcpkg_installed/%{triplet}/lib" 
       }
-      links { "fmt" }
+      links { "fmt", "glfw3" }

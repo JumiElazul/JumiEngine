@@ -1,13 +1,18 @@
 #pragma once
+struct GLFWwindow;
 
 class AppCore
 {
 public:
     static AppCore& instance();
-    int add(int a, int b);
+
+    void init();
 
 private:
-    AppCore() = default;
+    GLFWwindow* _window;
+    bool _initialized;
+
+    AppCore();
     ~AppCore() = default;
     AppCore(const AppCore& other) = delete;
     AppCore& operator=(const AppCore& other) = delete;

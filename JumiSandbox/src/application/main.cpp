@@ -4,4 +4,5 @@
 int main()
 {
     AppCore& core = AppCore::instance();
+    core.init();
 }
