@@ -1,43 +1,42 @@
-#include "EngineCore/core/app_core.h"
+#pragma once
+#include <memory>
+#include <string>
 #include <GLFW/glfw3.h>
-#include <fmt/format.h>
 
-AppCore::AppCore() 
-    : _window(nullptr)
-    , _initialized(false) 
-{ }
-
-AppCore& AppCore::instance()
+struct window_args
 {
-    static AppCore instance;
-    return instance;
-}
+    int width = 1920;
+    int height = 1080;
+    std::string title = "Default Title";
+    bool fullscreen = false;
+};
 
-void AppCore::init()
+class glfw_window
 {
-    if (!glfwInit())
-    {
-        fmt::print("Failed to initialize");
-    }
+public:
+    glfw_window(const window_args& args);
+    ~glfw_window();
 
-    _window = glfwCreateWindow(1920, 1080, "Test Window", nullptr, nullptr);
-    glfwShowWindow(_window);
+    const GLFWwindow* const window() const;
 
-    if (!_window)
-    {
-        glfwTerminate();
-    }
+private:
+    GLFWwindow* _window;
+};
 
-    glfwMakeContextCurrent(_window);
+class window_handler
+{
+public:
+    static window_handler& instance();
+    void init();
 
-    double time = 0.0;
+    window_handler();
+    ~window_handler();
+    window_handler(const window_handler& other) = delete;
+    window_handler& operator=(const window_handler& other) = delete;
+    window_handler(const window_handler&& other) = delete;
+    window_handler& operator=(const window_handler&& other) = delete;
 
-    while (time < 2.0)
-    {
-        time = glfwGetTime();
-        glfwSwapBuffers(_window);
-        glfwPollEvents();
-    }
-
-    _initialized = true;
-}
+private:
+    std::unique_ptr<glfw_window> _window;
+    bool _initialized;
+};
