@@ -1,4 +1,5 @@
 #pragma once
+#include "core/i_sub_system.h"
 #include <memory>
 #include <string>
 #include <stdexcept>
@@ -27,7 +28,7 @@ public:
 
     bool window_created() const;
     void create_window();
-    GLFWwindow* const window() const;
+    GLFWwindow* window();
 
 private:
     GLFWwindow* _window;
@@ -37,12 +38,13 @@ private:
     void set_window_hints() const;
 };
 
-class window_handler
+class window_handler : public i_sub_system
 {
 public:
     static window_handler& instance();
-    void init();
+    virtual void init() override;
     void show_window(bool show = true) const;
+    GLFWwindow* get_window();
 
     window_handler();
     ~window_handler();

@@ -8,8 +8,10 @@ int main()
     core.show_window();
 
     double time = 0.0;
-    while (time < 1.0)
+    while (time < 2.5)
     {
+        core.poll_events();
         time = core.get_time();
+
     }
 }

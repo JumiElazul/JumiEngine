@@ -1,4 +1,4 @@
-#include "EngineCore/window/window_handler.h"
+#include "window/window_handler.h"
 #include <fmt/format.h>
 #include <GLFW/glfw3.h>
 
@@ -41,7 +41,7 @@ void glfw_window::set_window_hints() const
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 }
 
-GLFWwindow* const glfw_window::window() const
+GLFWwindow* glfw_window::window()
 {
     return _window;
 }
@@ -86,4 +86,6 @@ void window_handler::show_window(bool show) const
     else
         glfwHideWindow(window);
 }
+
+GLFWwindow* window_handler::get_window() { return _window->window(); }
 
