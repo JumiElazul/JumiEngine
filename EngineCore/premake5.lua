@@ -17,7 +17,7 @@ project "EngineCore"
    }
 
    filter "system:windows"
-      defines { "JUMI_WINDOWS" }
+       defines { "JUMI_WINDOWS", "_CRT_SECURE_NO_WARNINGS" }
 
    filter "configurations:Debug"
       symbols "On"

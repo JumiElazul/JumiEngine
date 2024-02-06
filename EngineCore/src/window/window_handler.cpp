@@ -1,13 +1,12 @@
 #include "EngineCore/window/window_handler.h"
+#include <fmt/format.h>
 #include <GLFW/glfw3.h>
 
 glfw_window::glfw_window(const window_args& args)
     : _window(nullptr)
+    , _window_args(args)
+    , _window_created(false)
 {
-    if (args.fullscreen)
-        glfwCreateWindow(args.width, args.height, args.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
-    else
-        glfwCreateWindow(args.width, args.height, args.title.c_str(), nullptr, nullptr);
 }
 
 glfw_window::~glfw_window()
@@ -15,7 +14,34 @@ glfw_window::~glfw_window()
     glfwDestroyWindow(_window);
 }
 
-const GLFWwindow* const glfw_window::window() const
+bool glfw_window::window_created() const { return _window_created; }
+
+void glfw_window::create_window()
+{
+    set_window_hints();
+    int width = _window_args.width;
+    int height = _window_args.height;
+    const std::string& title = _window_args.title;
+    bool fullscreen = _window_args.fullscreen;
+
+    if (fullscreen)
+        _window = glfwCreateWindow(width, height, title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+    else
+        _window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+
+    if (!_window)
+    {
+        throw window_creation_exception("GLFWwindow could not be created");
+    }
+    _window_created = true;
+}
+
+void glfw_window::set_window_hints() const
+{
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+}
+
+GLFWwindow* const glfw_window::window() const
 {
     return _window;
 }
@@ -42,13 +68,22 @@ void window_handler::init()
 {
     window_args w_args;
     _window = std::make_unique<glfw_window>(w_args);
+    _window->create_window();
 
     _initialized = true;
+}
 
-    double time = 0.0;
-    while (time < 1.5)
+void window_handler::show_window(bool show) const
+{
+    if (!_initialized)
     {
-        time = glfwGetTime();
+        return;
     }
+
+    GLFWwindow* const window = _window->window();
+    if (show)
+        glfwShowWindow(window);
+    else
+        glfwHideWindow(window);
 }
 

@@ -9,6 +9,8 @@ public:
     static engine_core& instance();
 
     void init();
+    void show_window();
+    double get_time() const;
 
 private:
     std::unique_ptr<window_handler> _window_handler;
