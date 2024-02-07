@@ -22,9 +22,10 @@ private:
     bool _initialized;
 
     void initialize_glfw();
+    void deinit();
 
     engine_core();
-    ~engine_core() = default;
+    ~engine_core();
     engine_core(const engine_core& other) = delete;
     engine_core& operator=(const engine_core& other) = delete;
     engine_core(const engine_core&& other) = delete;

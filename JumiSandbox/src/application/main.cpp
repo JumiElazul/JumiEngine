@@ -12,6 +12,5 @@ int main()
     {
         core.poll_events();
         time = core.get_time();
-
     }
 }

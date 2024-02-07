@@ -7,12 +7,10 @@ glfw_window::glfw_window(const window_args& args)
     , _window_args(args)
     , _window_created(false)
 {
+
 }
 
-glfw_window::~glfw_window()
-{
-    glfwDestroyWindow(_window);
-}
+glfw_window::~glfw_window() { }
 
 bool glfw_window::window_created() const { return _window_created; }
 
@@ -49,13 +47,23 @@ GLFWwindow* glfw_window::window()
 window_handler::window_handler()
     : _window(nullptr)
     , _initialized(false)
+    , _window_pos()
 {
-
 }
 
 window_handler::~window_handler()
 {
 
+}
+
+void window_handler::cache_defaults()
+{
+    glfwGetWindowPos(_window->window(), &_window_pos.xpos, &_window_pos.ypos);
+}
+
+void window_handler::window_pos_callback(int xpos, int ypos)
+{
+    _window_pos = window_pos{ xpos, ypos };
 }
 
 window_handler& window_handler::instance()
@@ -70,6 +78,7 @@ void window_handler::init()
     _window = std::make_unique<glfw_window>(w_args);
     _window->create_window();
 
+    cache_defaults();
     _initialized = true;
 }
 

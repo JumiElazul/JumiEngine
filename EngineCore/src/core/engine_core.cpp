@@ -8,10 +8,15 @@
 
 engine_core::engine_core() 
     : _window_handler(std::make_unique<window_handler>())
-    , _input_handler(std::make_unique<input_handler>())
+    , _input_handler(std::make_unique<input_handler>(_window_handler.get()))
     , _callback_context(std::make_unique<callback_context>(*_window_handler, *_input_handler))
     , _initialized(false) 
 { }
+
+engine_core::~engine_core()
+{
+    deinit();
+}
 
 engine_core& engine_core::instance()
 {
@@ -44,4 +49,9 @@ void engine_core::initialize_glfw()
     {
         fmt::print("Failed to initialize glfw");
     }
+}
+
+void engine_core::deinit()
+{
+    glfwTerminate();
 }

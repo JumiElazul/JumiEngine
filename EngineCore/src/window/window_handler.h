@@ -20,11 +20,21 @@ struct window_args
     bool fullscreen = false;
 };
 
+struct window_pos
+{
+    int xpos;
+    int ypos;
+};
+
 class glfw_window
 {
 public:
     glfw_window(const window_args& args);
     ~glfw_window();
+    glfw_window(const glfw_window& other) = delete;
+    glfw_window operator=(const glfw_window& other) = delete;
+    glfw_window(const glfw_window&& other) = delete;
+    glfw_window operator=(const glfw_window&& other) = delete;
 
     bool window_created() const;
     void create_window();
@@ -40,6 +50,7 @@ private:
 
 class window_handler : public i_sub_system
 {
+friend class callback_context;
 public:
     static window_handler& instance();
     virtual void init() override;
@@ -56,4 +67,8 @@ public:
 private:
     std::unique_ptr<glfw_window> _window;
     bool _initialized;
+    window_pos _window_pos;
+
+    void cache_defaults();
+    void window_pos_callback(int xpos, int ypos);
 };

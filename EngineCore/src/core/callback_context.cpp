@@ -25,6 +25,7 @@ void callback_context::init()
     glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, cursor_pos_callback);
+    glfwSetWindowPosCallback(window, window_pos_callback);
 }
 
 window_handler& callback_context::get_window_handler() const { return _window_handler; }
@@ -55,4 +56,10 @@ void callback_context::cursor_pos_callback(GLFWwindow* window, double xpos, doub
 {
     const callback_context* callback_ctx = get_window_user_pointer(window);
     callback_ctx->get_input_handler().cursor_pos_callback(xpos, ypos);
+}
+
+void callback_context::window_pos_callback(GLFWwindow* window, int xpos, int ypos)
+{
+    const callback_context* callback_ctx = get_window_user_pointer(window);
+    callback_ctx->get_window_handler().window_pos_callback(xpos, ypos);
 }
