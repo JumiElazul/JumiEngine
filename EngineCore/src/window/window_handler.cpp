@@ -27,6 +27,8 @@ void glfw_window::create_window()
     else
         _window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
+    glfwMakeContextCurrent(_window);
+
     if (!_window)
     {
         throw window_creation_exception("GLFWwindow could not be created");
@@ -97,4 +99,9 @@ void window_handler::show_window(bool show) const
 }
 
 GLFWwindow* window_handler::get_window() { return _window->window(); }
+
+void window_handler::swap_buffers() const
+{
+    glfwSwapBuffers(_window->window());
+}
 

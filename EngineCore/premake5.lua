@@ -16,6 +16,8 @@ project "EngineCore"
        "../vcpkg_installed/%{triplet}/include"
    }
 
+   defines { "GLFW_INCLUDE_NONE" }
+
    filter "system:windows"
        defines { "JUMI_WINDOWS", "_CRT_SECURE_NO_WARNINGS" }
 
@@ -26,7 +28,7 @@ project "EngineCore"
       {
           "../vcpkg_installed/%{triplet}/debug/lib",
       }
-      links { "fmtd", "glfw3" }
+      links { "fmtd", "glfw3", "glad" }
 
    filter "configurations:Release"
       optimize "On"
@@ -35,4 +37,4 @@ project "EngineCore"
       {
           "../vcpkg_installed/%{triplet}/lib" 
       }
-      links { "fmt", "glfw3" }
+      links { "fmt", "glfw3", "glad" }

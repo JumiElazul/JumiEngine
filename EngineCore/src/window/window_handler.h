@@ -56,6 +56,7 @@ public:
     virtual void init() override;
     void show_window(bool show = true) const;
     GLFWwindow* get_window();
+    void swap_buffers() const;
 
     window_handler();
     ~window_handler();
