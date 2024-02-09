@@ -41,14 +41,34 @@ shader* resource_manager::get_shader(const std::string& shader_name)
     }
 }
 
-const shader* const resource_manager::get_default_shader() const
+const mesh* const resource_manager::get_default_mesh(primitive_shape mesh_type) const
 {
-    return &_shader_library.at("BasicShader");
+    switch (mesh_type)
+    {
+        case primitive_shape::triangle:
+        {
+            return &_mesh_library.at("__TriangleMesh__");
+        }
+    }
+
+    return &_mesh_library.at("__TriangleMesh__");
+}
+
+const shader* const resource_manager::get_default_shader(default_shader shader_type) const
+{
+    switch (shader_type)
+    {
+        case default_shader::basic_shader:
+        {
+            return &_shader_library.at("__BasicShader__");
+        }
+    }
+
+    return &_shader_library.at("__BasicShader__");
 }
 
 void resource_manager::init()
 {
-    std::string x = s_shader_asset_path;
     init_default_meshes();
     init_default_shaders();
     init_default_textures();
@@ -56,14 +76,14 @@ void resource_manager::init()
 
 void resource_manager::init_default_meshes()
 {
-    _mesh_library.emplace("TriangleMesh", mesh{ s_triangle_mesh_vertices });
+    _mesh_library.emplace("__TriangleMesh__", mesh{ s_triangle_mesh_vertices });
 }
 
 void resource_manager::init_default_shaders()
 {
     shader basic_shader;
     basic_shader.prime_shader(s_basic_shader_vertex_path, s_basic_shader_fragment_path);
-    _shader_library["BasicShader"] = std::move(basic_shader);
+    _shader_library["__BasicShader__"] = std::move(basic_shader);
 }
 
 void resource_manager::init_default_textures()

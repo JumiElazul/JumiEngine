@@ -29,7 +29,7 @@ public:
     void clear_color_buffer() const;
     void clear_depth_buffer() const;
     void clear_color_depth_buffer() const;
-    void render_mesh(mesh* mesh);
+    void render_mesh(const mesh* mesh);
 
 private:
     window_handler* _window_handler;

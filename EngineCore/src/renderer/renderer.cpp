@@ -24,7 +24,7 @@ void renderer::clear_color_buffer()       const { glClear(GL_COLOR_BUFFER_BIT); 
 void renderer::clear_depth_buffer()       const { glClear(GL_DEPTH_BUFFER_BIT); }
 void renderer::clear_color_depth_buffer() const { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
-void renderer::render_mesh(mesh* mesh)
+void renderer::render_mesh(const mesh* mesh)
 {
     if (!mesh)
     {

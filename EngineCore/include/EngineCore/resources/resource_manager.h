@@ -9,6 +9,16 @@ using mesh_library = std::unordered_map<std::string, mesh>;
 using shader_library = std::unordered_map<std::string, shader>;
 //using texture_library = std::unordered_map<std::string, texture>;
 
+enum class primitive_shape
+{
+    triangle,
+};
+
+enum class default_shader
+{
+    basic_shader,
+};
+
 class resource_manager
 {
 public:
@@ -17,7 +27,8 @@ public:
     mesh* get_mesh(const std::string& mesh_name);
     shader* get_shader(const std::string& shader_name);
 
-    const shader* const get_default_shader() const;
+    const mesh* const get_default_mesh(primitive_shape mesh_type) const;
+    const shader* const get_default_shader(default_shader shader_type = default_shader::basic_shader) const;
 
 private:
     mesh_library _mesh_library;

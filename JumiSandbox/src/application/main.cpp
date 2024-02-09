@@ -14,12 +14,12 @@ int main()
     renderer.set_clear_color(1.0f, 0.0f, 0.0f);
 
     resource_manager& resource_manager = resource_manager::instance();
-    mesh* tri_mesh = resource_manager.get_mesh("TriangleMesh");
-    const shader* basic_shader = resource_manager.get_default_shader();
+    const mesh* tri_mesh = resource_manager.get_default_mesh(primitive_shape::triangle);
+    const shader* basic_shader = resource_manager.get_default_shader(default_shader::basic_shader);
     basic_shader->bind();
 
     double time = 0.0;
-    while (time < 8.5)
+    while (time < 3.5)
     {
         core.poll_events();
         time = core.get_time();
