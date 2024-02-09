@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include "EngineCore/renderer/mesh.h"
+#include "EngineCore/renderer/shader.h"
 
 using mesh_library = std::unordered_map<std::string, mesh>;
 using shader_library = std::unordered_map<std::string, mesh>;
@@ -14,6 +15,7 @@ public:
     static resource_manager& instance();
 
     mesh* get_mesh(const std::string& mesh_name);
+    shader* get_shader(const std::string& shader_name);
 
 private:
     mesh_library _mesh_library;

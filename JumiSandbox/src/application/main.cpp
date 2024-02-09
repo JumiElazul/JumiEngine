@@ -14,6 +14,7 @@ int main()
 
     resource_manager& resource_manager = resource_manager::instance();
     mesh* tri_mesh = resource_manager.get_mesh("TriangleMesh");
+    //shader* basic_shader = resource_manager.get_shader("BasicShader");
 
     double time = 0.0;
     while (time < 2.5)
