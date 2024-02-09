@@ -2,6 +2,7 @@
 #include <GLAD/glad.h>
 #include <fmt/format.h>
 #include "core/utils.h"
+#include <glm/gtc/type_ptr.hpp>
 
 shader::shader()
     : _shader_program_id()
@@ -106,6 +107,43 @@ void shader::bind() const
 
 void shader::unbind() const { glUseProgram(0); }
 
+void shader::set_bool(const std::string& uniform_name, bool value) const
+{
+    int location = get_uniform_location(uniform_name);
+    glUniform1i(location, static_cast<int>(value));
+}
+
+void shader::set_int(const std::string& uniform_name, int value) const
+{
+    int location = get_uniform_location(uniform_name);
+    glUniform1i(location, value);
+}
+
+void shader::set_float(const std::string& uniform_name, float value) const
+{
+    int location = get_uniform_location(uniform_name);
+    glUniform1f(location, value);
+}
+
+void shader::set_vec3(const std::string& uniform_name, const glm::vec3& vec3) const
+{
+    int location = get_uniform_location(uniform_name);
+    glUniform3f(location, vec3.x, vec3.y, vec3.z);
+}
+
+void shader::set_mat4(const std::string& uniform_name, const glm::mat4& mat4) const
+{
+    int location = get_uniform_location(uniform_name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat4));
+}
+
+int shader::get_uniform_location(const std::string& uniform_name) const
+{
+    int location = glGetUniformLocation(_shader_program_id, uniform_name.c_str());
+    return location;
+}
+
 void shader::release_opengl_resources()
 {
+    glDeleteProgram(_shader_program_id);
 }

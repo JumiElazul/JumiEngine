@@ -1,6 +1,7 @@
 #include "EngineCore/core/engine_core.h"
 #include "EngineCore/renderer/mesh.h"
 #include "EngineCore/renderer/renderer.h"
+#include "EngineCore/renderer/shader.h"
 #include "EngineCore/resources/resource_manager.h"
 #include <fmt/format.h>
 
@@ -14,14 +15,16 @@ int main()
 
     resource_manager& resource_manager = resource_manager::instance();
     mesh* tri_mesh = resource_manager.get_mesh("TriangleMesh");
-    //shader* basic_shader = resource_manager.get_shader("BasicShader");
+    const shader* basic_shader = resource_manager.get_default_shader();
+    basic_shader->bind();
 
     double time = 0.0;
-    while (time < 2.5)
+    while (time < 8.5)
     {
         core.poll_events();
         time = core.get_time();
 
+        basic_shader->set_float("u_time", time);
         renderer.render_mesh(tri_mesh);
 
         core.swap_buffers();
