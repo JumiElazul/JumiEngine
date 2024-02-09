@@ -12,14 +12,12 @@ public:
     shader(shader&& other) noexcept;
     shader& operator=(shader&& other) noexcept;
 
-    void set_fragment_shader(const std::string& filepath);
-    void set_vertex_shader(const std::string& filepath);
-    void link_shader();
+    void prime_shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path);
     void bind() const;
     void unbind() const;
 
 private:
-    unsigned int _id;
+    unsigned int _shader_program_id;
     bool _shader_linked;
 
     virtual void release_opengl_resources() override;

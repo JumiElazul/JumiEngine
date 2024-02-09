@@ -38,6 +38,7 @@ void resource_manager::init_default_meshes()
 
 void resource_manager::init_default_shaders()
 {
+
 }
 
 void resource_manager::init_default_textures()
